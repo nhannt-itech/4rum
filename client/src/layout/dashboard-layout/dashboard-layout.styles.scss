@@ -1,0 +1,84 @@
+.logo {
+	height: 100%;
+	width: 123px;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.antd-button {
+	margin: 0px 10px;
+}
+/* Dashboard Layout */
+.dashboard-layout {
+	padding: 0 50px;
+	margin-top: 64px;
+	.content {
+		min-height: 67vh;
+	}
+	/* Responsive */
+	@media (max-width: 992px) {
+		padding: 0 10px;
+	}
+}
+
+/* Dashboard BreadCrumb */
+.dashboard-breadcrumb {
+	margin: 20px 0;
+}
+
+/* Dashboard DrawSider */
+.optional-dashboard-sider {
+	padding: 10px 20px;
+	img {
+		width: 18px;
+		margin-right: 5px;
+	}
+}
+
+/* Dashboard Header */
+#dashboard-header {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+	padding: 0px 15px;
+}
+
+.language-menu-items img {
+	width: 20px;
+	margin-right: 10px;
+}
+
+/* Language */
+#language-menu-img {
+	max-width: 32px;
+	max-height: 32px;
+	margin-bottom: 2px;
+}
+
+.ant-drawer-body {
+	padding: 0px !important;
+}
+
+/* Dashboard Footer */
+.dashboard-footer {
+	margin-top: 20px;
+	.primary {
+		background-color: white;
+	}
+	.secondary {
+		text-align: center;
+		background-color: var(--primary-clr);
+	}
+}
+
+/* Responsive */
+@media (min-width: 992px) {
+	#side-menu-btn {
+		display: none;
+	}
+}
+@media (max-width: 992px) {
+	#dashboard-header-menu,
+	#language-menu-img {
+		display: none;
+	}
+}

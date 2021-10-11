@@ -1,0 +1,33 @@
+.news-page-search {
+	margin-bottom: 20px;
+}
+
+.news-card {
+	.avatar {
+		width: 100%;
+		height: 150px;
+		object-fit: cover;
+		border: 10px solid white;
+	}
+	.title {
+		font-size: 100%;
+		margin-bottom: 20px;
+	}
+	.tags-container {
+		white-space: nowrap;
+		width: 100%;
+		height: 30px;
+		overflow: hidden;
+	}
+	.tags-container:hover {
+		overflow: auto;
+	}
+	.tag {
+		display: inline-block;
+		vertical-align: top;
+	}
+	.ant-card-body {
+		padding-bottom: 10px !important;
+		padding-top: 10px !important;
+	}
+}
