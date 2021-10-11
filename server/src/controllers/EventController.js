@@ -26,7 +26,7 @@ module.exports = {
 		return res.json(event);
 	},
 
-	async getEventById(req, res) {
+	async getEventById(req, res, next) {
 		const { eventId } = req.params;
 		try {
 			const event = await Event.findById(eventId);
@@ -35,7 +35,12 @@ module.exports = {
 				return res.json(event);
 			}
 		} catch (error) {
-			return res.status(400).json({ message: 'EventId does not exist!' });
+			/**
+			 * 500 (Internal Server Error) - Something has gone wrong in your application.
+			 */
+			const httpError = createHttpError(500, error);
+
+			next(httpError);
 		}
 	},
 };

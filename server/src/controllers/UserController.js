@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const createHttpError = require('http-errors');
+const { success, error, validation } = require('../utils/responseApi');
 
 module.exports = {
-	async createUser(req, res) {
+	async createUser(req, res, next) {
 		console.log(req.body);
 		try {
 			const { email, firstName, lastName, password } = req.body;
@@ -16,26 +18,22 @@ module.exports = {
 					lastName,
 					password: hashPassword,
 				});
-				return res.json(user);
+				return res.status(200).json(success(user, 'OK', res.statusCode));
 			}
-			return res.status(400).json({
-				message: 'email already exist!  do you want to login instead? ',
-			});
+			return res.status(400).json(error('Email đã tồn tại', res.statusCode));
 		} catch (err) {
-			throw Error(`Error while Registering new user :  ${err}`);
+			return res.status(500).json(error('Xảy ra lỗi khi tạo User', res.statusCode));
 		}
 	},
 
-	async getUserById(req, res) {
+	async getUserById(req, res, next) {
 		const { userId } = req.params;
 
 		try {
 			const user = await User.findById(userId);
-			return res.json(user);
-		} catch (error) {
-			return res.status(400).json({
-				message: 'User ID does not exist, do you want to register instead?',
-			});
+			return res.status(200).json(success(user, 'OK', res.statusCode));
+		} catch (err) {
+			return res.status(400).json(error('User không tồn tại', res.statusCode));
 		}
 	},
 };
