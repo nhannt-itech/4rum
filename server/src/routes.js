@@ -1,3 +1,4 @@
+const { auth } = require('./middleware/auth');
 const express = require('express');
 const multer = require('multer');
 
@@ -17,7 +18,9 @@ routes.get('/event/:eventId', EventController.getEventById);
 routes.post('/event', upload.single('thumbnail'), EventController.createEvent);
 
 //User
-routes.post('/user/register', UserController.createUser);
+routes.post('/user/register', UserController.register);
+routes.post('/user/login', UserController.login);
 routes.get('/user/:userId', UserController.getUserById);
+routes.get('/api/profile', auth(), UserController.profile);
 
 module.exports = routes;

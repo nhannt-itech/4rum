@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const routes = require('./routes');
 const path = require('path');
+const errorHandler = require('./middleware/error-handler');
 const app = express();
 
 const PORT = process.env.PORT || 8000;
@@ -21,13 +22,14 @@ app.use(cookieParser());
 app.use(morgan('tiny'));
 app.use('/files', express.static(path.resolve(__dirname, '..', 'files')));
 app.use(routes);
+app.use(errorHandler);
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
 try {
-	mongoose.connect(process.env.MONGO_DB_SECRET, {
+	mongoose.connect(process.env.MONGODB_URI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	});
