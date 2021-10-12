@@ -4,12 +4,9 @@ import DashboardLayout from './layout/dashboard-layout/dashboard-layout';
 import IdentityLayout from './layout/identity-layout/identity-layout';
 import PrivateRoute from './routes/privateRoute';
 import { ForgotPasswordPage, SignUpPage, SignInPage } from './pages/identity-pages';
-import LandingPage from './layout/LandingPage';
 
 import { CreatePostPage } from './pages/protected-pages';
 import {
-	CoursePage,
-	CourseDetailPage,
 	HomePage,
 	PostPage,
 	PostDetailPage,
@@ -20,9 +17,6 @@ import {
 const App = () => {
 	return (
 		<Switch>
-			{/* LandingPage */}
-			<Route path='/' component={LandingPage} exact></Route>
-
 			{/* IdentityPage */}
 			<Route path='/identity/:path?' exact>
 				<IdentityLayout>
@@ -36,9 +30,7 @@ const App = () => {
 			<Route>
 				<DashboardLayout>
 					<Switch>
-						<Route exact path='/home' component={HomePage}></Route>
-						<Route exact path='/course' component={CoursePage}></Route>
-						<Route exact path='/course/:id' component={CourseDetailPage} />
+						<Route exact path='/' component={HomePage}></Route>
 						<Route exact path='/post' component={PostPage}></Route>
 						<Route exact path='/post/:id' component={PostDetailPage}></Route>
 						<Route exact path='/news' component={NewsPage}></Route>

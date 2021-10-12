@@ -8,8 +8,10 @@ const { TabPane } = Tabs;
 export const HomePage = () => {
 	return (
 		<div class='user-home-page'>
-			<div className='header'>
-				<Title level={4}>Xin chào "User". Chào mừng bạn đã đến với 4rum. Hãy khám phá nhé!</Title>
+			<div hidden className='header' style={{ marginTop: '-25px' }}>
+				<Title level={4}>
+					Xin chào "User". Chào mừng bạn đã đến với 4rum. Hãy khám phá nhé!
+				</Title>
 				<Col span={24}>
 					<Card className='level-card'>
 						<Row>
@@ -56,9 +58,7 @@ export const HomePage = () => {
 					</TabPane>
 				</Tabs>
 			</div>
-            <BoxChat />
-
-			
+			<BoxChat />
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
-import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import {
 	UserOutlined,
 	UserAddOutlined,
@@ -7,27 +7,22 @@ import {
 	SolutionOutlined,
 	NotificationOutlined,
 	EditOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
 export const HeaderMenuData = [
 	{
-		title: "Trang chủ",
-		url: "/home",
+		title: 'Trang chủ',
+		url: '/',
 		icon: HomeOutlined,
 	},
 	{
-		title: "Khóa học",
-		url: "/course",
-		icon: SolutionOutlined,
-	},
-	{
-		title: "Thảo luận",
-		url: "/post",
+		title: 'Thảo luận',
+		url: '/post',
 		icon: EditOutlined,
 	},
 	{
-		title: "Tin tức",
-		url: "/news",
+		title: 'Tin tức',
+		url: '/news',
 		icon: NotificationOutlined,
 	},
 ];
@@ -35,12 +30,12 @@ export const HeaderMenuData = [
 export const IdentityMenuData = () => (
 	<Menu>
 		<Menu.Item>
-			<Link to="/identity/sign-in">
+			<Link to='/identity/sign-in'>
 				<UserOutlined /> Đăng nhập
 			</Link>
 		</Menu.Item>
 		<Menu.Item>
-			<Link to="/identity/sign-up">
+			<Link to='/identity/sign-up'>
 				<UserAddOutlined /> Đăng ký
 			</Link>
 		</Menu.Item>
@@ -48,28 +43,28 @@ export const IdentityMenuData = () => (
 );
 
 export const UserMenuData = ({ onSignOut }) => (
-	<Menu style={{ width: "200px" }}>
+	<Menu style={{ width: '200px' }}>
 		<Menu.Item>
-			<Link to="/home">Thông tin của tôi</Link>
+			<Link to='/'>Thông tin của tôi</Link>
 		</Menu.Item>
 		<Menu.Item>
-			<Link to="/home">Hồ sơ của tôi</Link>
+			<Link to='/'>Hồ sơ của tôi</Link>
 		</Menu.Item>
 		<Menu.Item>
-			<Link to="/home">Lớp học của tôi</Link>
+			<Link to='/'>Lớp học của tôi</Link>
 		</Menu.Item>
 		<Menu.Item onClick={onSignOut}>Đăng xuất</Menu.Item>
 	</Menu>
 );
 
 export const LanguageMenuData = (
-	<Menu className="language-menu-items">
+	<Menu className='language-menu-items'>
 		<Menu.Item>
-			<img src="/images/icons/vn.png" alt="" />
+			<img src='/images/icons/vn.png' alt='' />
 			Việt Nam
 		</Menu.Item>
 		<Menu.Item>
-			<img src="/images/icons/en.png" alt="" />
+			<img src='/images/icons/en.png' alt='' />
 			Tiếng Anh
 		</Menu.Item>
 	</Menu>
