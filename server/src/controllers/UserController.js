@@ -1,5 +1,4 @@
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const User = require('../models/user');
 const { success, error } = require('../utils/responseApi');
 
 module.exports = {
@@ -17,8 +16,8 @@ module.exports = {
 	async register(req, res, next) {
 		const newUser = new User(req.body);
 
-		User.findOne({ email: newUser.email }, function (err, user) {
-			if (user) return res.status(400).json(error('Email đã tồn tại', res.statusCode));
+		User.findOne({ userName: newUser.userName }, function (err, user) {
+			if (user) return res.status(400).json(error('username đã tồn tại', res.statusCode));
 
 			newUser.save((err, doc) => {
 				if (err) next(err);
@@ -33,7 +32,7 @@ module.exports = {
 			next(err);
 			if (user) return res.status(400).json(error('Bạn đã đăng nhập', res.statusCode));
 			else {
-				User.findOne({ email: req.body.email }, function (err, user) {
+				User.findOne({ userName: req.body.userName }, function (err, user) {
 					if (!user)
 						return res
 							.status(400)
@@ -54,7 +53,7 @@ module.exports = {
 										{
 											isAuth: true,
 											id: user._id,
-											email: user.email,
+											userName: user.userName,
 										},
 										'OK',
 										res.statusCode

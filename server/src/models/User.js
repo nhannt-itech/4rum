@@ -4,12 +4,20 @@ const bcrypt = require('bcrypt');
 const salt = 10;
 
 const userSchema = new mongoose.Schema({
-	firstName: String,
-	lastName: String,
-	password: String,
-	email: String,
+	userName: {
+		type: String,
+		unique: true,
+	},
+	fullName: String,
+	password: {
+		type: String,
+		required: true,
+	},
 	token: String,
-	role: String,
+	role: {
+		type: String,
+		required: true,
+	},
 });
 
 userSchema.pre('save', function (next) {
