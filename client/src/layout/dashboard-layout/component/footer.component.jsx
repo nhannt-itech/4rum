@@ -1,17 +1,18 @@
-import { Layout, Row, Col, Typography } from "antd";
+import { Layout, Row, Col, Typography } from 'antd';
 const { Footer } = Layout;
-const { Text, Title, Link } = Typography;
+const { Text, Title } = Typography;
 
 export const DashboardFooter = () => {
 	return (
-		<div className="dashboard-footer">
-			<Footer className="primary">
+		<div className='dashboard-footer'>
+			<Footer className='primary'>
 				<Row gutter={[20, 20]}>
 					<Col md={24} lg={12}>
 						<Title>CODE-EDU</Title>
 						<Text>
-							CodeEdu là nền tảng tương tác trực tuyến hỗ trợ người dùng học tập, thực hành, thi đấu
-							và đánh giá kỹ năng lập trình một cách nhanh chóng và chính xác.
+							CodeEdu là nền tảng tương tác trực tuyến hỗ trợ người dùng học tập, thực
+							hành, thi đấu và đánh giá kỹ năng lập trình một cách nhanh chóng và chính
+							xác.
 						</Text>
 					</Col>
 					<Col lg={4} md={8}>
@@ -35,7 +36,7 @@ export const DashboardFooter = () => {
 					</Col>
 				</Row>
 			</Footer>
-			<Footer style={{ padding: "10px 0px" }} className="secondary">
+			<Footer style={{ padding: '10px 0px' }} className='secondary'>
 				CodeLearn ©2018 Created by Tsae & Rynoz
 			</Footer>
 		</div>

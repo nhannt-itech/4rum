@@ -14,7 +14,8 @@ let auth = (roles = []) => {
 
 			if (roles.length && !roles.includes(user.role))
 				return res.status(401).json(error('Bạn không có quyền truy cập', res.statusCode));
-
+			req.token = token;
+			req.user = user;
 			next();
 		});
 	};

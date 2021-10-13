@@ -3,7 +3,6 @@ import './dashboard-layout.styles.scss';
 import {
 	DashboardFooter,
 	DashboardHeader,
-	DashboardBreadcrumb,
 	SignInSignUpModal,
 } from './component';
 

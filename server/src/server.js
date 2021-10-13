@@ -10,8 +10,19 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
-app.use(cors());
-app.use(express.json());
+var corsOptions = {
+	origin: function (origin, callback) {
+		if (['http://localhost:3000', 'http://example2.com'].indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	},
+	credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(
 	express.urlencoded({

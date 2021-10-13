@@ -3,22 +3,28 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const salt = 10;
 
-const userSchema = new mongoose.Schema({
-	userName: {
-		type: String,
-		unique: true,
+const userSchema = new mongoose.Schema(
+	{
+		userName: {
+			type: String,
+			unique: true,
+		},
+		fullName: String,
+		password: {
+			type: String,
+			required: true,
+		},
+		token: String,
+		role: {
+			type: String,
+			required: true,
+			default: 'User',
+		},
 	},
-	fullName: String,
-	password: {
-		type: String,
-		required: true,
-	},
-	token: String,
-	role: {
-		type: String,
-		required: true,
-	},
-});
+	{
+		timestamps: true,
+	}
+);
 
 userSchema.pre('save', function (next) {
 	var user = this;

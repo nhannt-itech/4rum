@@ -4,7 +4,6 @@ import {
 	UserOutlined,
 	UserAddOutlined,
 	HomeOutlined,
-	SolutionOutlined,
 	NotificationOutlined,
 	EditOutlined,
 } from '@ant-design/icons';

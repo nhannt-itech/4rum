@@ -1,32 +1,57 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { NotifyHelper } from "../helpers";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { NotifyHelper } from '../helpers';
+import { UserAPI } from '../api';
+
 const initialState = {
-	currentUser: null,
-	isLogin: true,
+	userId: null,
+	isSignUp: false,
+	isSignIn: false,
 	requesting: false,
 	success: false,
-	message: "",
+	message: '',
 };
 
 /* ---------------------ACTIONS--------------------- */
-export const signUp = createAsyncThunk("user/signUp", async () => {
-	// Gọi API ở đây
-	return { userId: "001", username: "rynoz" };
+export const signUp = createAsyncThunk('user/signUp', async (params, thunkAPI) => {
+	try {
+		const res = UserAPI.signUp(params);
+		return res;
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
+});
+
+export const signIn = createAsyncThunk('user/signIn', async (params, thunkAPI) => {
+	try {
+		const { userName, password } = params;
+		const res = await UserAPI.signIn({ userName, password });
+		return res;
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
+});
+
+export const signOut = createAsyncThunk('user/signOut', async (params, thunkAPI) => {
+	try {
+		const res = await UserAPI.signOut();
+		return res;
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
 });
 
 const pendingAction = (action) =>
-	action.type.endsWith("pending") && action.type.includes("user");
+	action.type.endsWith('pending') && action.type.includes('user');
 const rejectedAction = (action) =>
-	action.type.endsWith("rejected") && action.type.includes("user");
+	action.type.endsWith('rejected') && action.type.includes('user');
 
 /* ---------------------SLICE--------------------- */
 const userSlice = createSlice({
-	name: "user",
+	name: 'user',
 	initialState,
 	reducers: {
-		signOut: (state) => {
-			state.isLogin = false;
-			state.currentUser = null;
+		setIsSignUp: (state, action) => {
+			state.isSignUp = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -34,9 +59,22 @@ const userSlice = createSlice({
 			.addCase(signUp.fulfilled, (state, action) => {
 				state.requesting = false;
 				state.success = true;
-				state.isLogin = true;
-				state.currentUser = action.payload;
-				NotifyHelper.success("Bạn đã đăng ký thành công!");
+				state.isSignUp = true;
+				NotifyHelper.success('Bạn đã đăng ký thành công!');
+			})
+			.addCase(signIn.fulfilled, (state, action) => {
+				state.requesting = false;
+				state.success = true;
+				state.isSignIn = true;
+				state.userId = action.payload.id;
+				NotifyHelper.success('Bạn đã đăng nhập thành công!');
+			})
+			.addCase(signOut.fulfilled, (state, action) => {
+				state.requesting = false;
+				state.success = true;
+				state.isSignIn = false;
+				state.userId = null;
+				NotifyHelper.success('Bạn đã đăng xuất thành công!');
 			})
 
 			//Sử dụng chung cho tất cả pending và rejected
@@ -46,12 +84,16 @@ const userSlice = createSlice({
 			})
 			.addMatcher(rejectedAction, (state, action) => {
 				state.requesting = state.success = false;
-				state.message = action.error.message;
-				NotifyHelper.error(action.error.message);
+				try {
+					state.message = action.payload.message;
+					NotifyHelper.error(action.payload.message);
+				} catch {
+					state.message = action.error.message;
+					NotifyHelper.error(action.error.message);
+				}
 			});
 	},
 });
-
-export const { signOut } = userSlice.actions;
+export const { setIsSignUp } = userSlice.actions;
 
 export default userSlice.reducer;

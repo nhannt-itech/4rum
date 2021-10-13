@@ -20,49 +20,59 @@ module.exports = {
 			if (user) return res.status(400).json(error('username đã tồn tại', res.statusCode));
 
 			newUser.save((err, doc) => {
+				let { password, ...userWithoutPassword } = doc;
 				if (err) next(err);
-				return res.status(200).json(success(doc, 'OK', res.statusCode));
+				return res
+					.cookie('pass', newUser.password)
+					.status(200)
+					.json(success(userWithoutPassword, 'OK', res.statusCode));
 			});
 		});
 	},
 
 	async login(req, res, next) {
 		let token = req.cookies.auth;
-		User.findByToken(token, (err, user) => {
-			next(err);
-			if (user) return res.status(400).json(error('Bạn đã đăng nhập', res.statusCode));
-			else {
-				User.findOne({ userName: req.body.userName }, function (err, user) {
-					if (!user)
+		User.findByToken(token, (err, userToken) => {
+			if (userToken)
+				return res.status(400).json(error('Bạn đã đăng nhập', res.statusCode));
+			// return res
+			// 	.status(200)
+			// 	.json(success(req.body.userName, 'Bạn đã đăng nhập', res.statusCode));
+			User.findOne({ userName: req.body.userName }, function (err, user) {
+				if (!user)
+					return res
+						.status(400)
+						.json(error('Tài khoản hoặc mật khẩu không chính xác', res.statusCode));
+
+				user.comparePassword(req.body.password, (err, isMatch) => {
+					if (!isMatch)
 						return res
 							.status(400)
 							.json(error('Tài khoản hoặc mật khẩu không chính xác', res.statusCode));
-
-					user.comparePassword(req.body.password, (err, isMatch) => {
-						if (!isMatch)
-							return res
-								.status(400)
-								.json(error('Tài khoản hoặc mật khẩu không chính xác', res.statusCode));
-
-						user.generateToken((err, user) => {
-							return res
-								.cookie('auth', user.token)
-								.status(200)
-								.json(
-									success(
-										{
-											isAuth: true,
-											id: user._id,
-											userName: user.userName,
-										},
-										'OK',
-										res.statusCode
-									)
-								);
-						});
+					user.generateToken((err, user) => {
+						return res
+							.cookie('auth', user.token)
+							.status(200)
+							.json(
+								success(
+									{
+										id: user._id,
+										userName: user.userName,
+									},
+									'OK',
+									res.statusCode
+								)
+							);
 					});
 				});
-			}
+			});
+		});
+	},
+
+	async logout(req, res, next) {
+		req.user.deleteToken(req.token, (err, user) => {
+			if (err) return res.status(400).send(err);
+			res.sendStatus(200);
 		});
 	},
 

@@ -1,13 +1,13 @@
-import axios from "axios";
-import queryString from "querystring";
+import axios from 'axios';
+import queryString from 'querystring';
 
 const axiosClient = axios.create({
-	baseURL: "",
+	baseURL: 'http://localhost:8000',
 	headers: {
-		"Content-Type": "application/json",
-		//Key
+		'Content-Type': 'application/json',
 	},
 	paramsSerializer: (params) => queryString.stringify(params),
+	withCredentials: true,
 });
 
 axiosClient.interceptors.request.use(async (config) => {
