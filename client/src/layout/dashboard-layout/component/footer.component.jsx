@@ -8,12 +8,8 @@ export const DashboardFooter = () => {
 			<Footer className='primary'>
 				<Row gutter={[20, 20]}>
 					<Col md={24} lg={12}>
-						<Title>CODE-EDU</Title>
-						<Text>
-							CodeEdu là nền tảng tương tác trực tuyến hỗ trợ người dùng học tập, thực
-							hành, thi đấu và đánh giá kỹ năng lập trình một cách nhanh chóng và chính
-							xác.
-						</Text>
+						<Title>4rum</Title>
+						<Text>4rum là một mạng xã hội giải trí dành cho các bạn trẻ</Text>
 					</Col>
 					<Col lg={4} md={8}>
 						<Title level={4}>LIÊN KẾT</Title>
@@ -37,7 +33,7 @@ export const DashboardFooter = () => {
 				</Row>
 			</Footer>
 			<Footer style={{ padding: '10px 0px' }} className='secondary'>
-				CodeLearn ©2018 Created by Tsae & Rynoz
+				4rum @2021 Created by Nhan Nguyen
 			</Footer>
 		</div>
 	);

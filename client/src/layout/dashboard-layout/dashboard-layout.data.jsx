@@ -19,11 +19,6 @@ export const HeaderMenuData = [
 		url: '/post',
 		icon: EditOutlined,
 	},
-	{
-		title: 'Tin tức',
-		url: '/news',
-		icon: NotificationOutlined,
-	},
 ];
 
 export const IdentityMenuData = () => (
@@ -45,12 +40,6 @@ export const UserMenuData = ({ onSignOut }) => (
 	<Menu style={{ width: '200px' }}>
 		<Menu.Item>
 			<Link to='/'>Thông tin của tôi</Link>
-		</Menu.Item>
-		<Menu.Item>
-			<Link to='/'>Hồ sơ của tôi</Link>
-		</Menu.Item>
-		<Menu.Item>
-			<Link to='/'>Lớp học của tôi</Link>
 		</Menu.Item>
 		<Menu.Item onClick={onSignOut}>Đăng xuất</Menu.Item>
 	</Menu>

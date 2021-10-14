@@ -6,13 +6,7 @@ import PrivateRoute from './routes/privateRoute';
 import { ForgotPasswordPage, SignUpPage, SignInPage } from './pages/identity-pages';
 
 import { CreatePostPage } from './pages/protected-pages';
-import {
-	HomePage,
-	PostPage,
-	PostDetailPage,
-	NewsPage,
-	NewsDetailPage,
-} from './pages/public-pages';
+import { HomePage, PostPage, PostDetailPage } from './pages/public-pages';
 
 const App = () => {
 	return (
@@ -33,8 +27,6 @@ const App = () => {
 						<Route exact path='/' component={HomePage}></Route>
 						<Route exact path='/post' component={PostPage}></Route>
 						<Route exact path='/post/:id' component={PostDetailPage}></Route>
-						<Route exact path='/news' component={NewsPage}></Route>
-						<Route exact path='/news/:id' component={NewsDetailPage}></Route>
 						<Route exact path='/create-post' component={CreatePostPage}></Route>
 						{/* <PrivateRoute exact path="/course/:id" component={CourseDetailPage} /> */}
 					</Switch>

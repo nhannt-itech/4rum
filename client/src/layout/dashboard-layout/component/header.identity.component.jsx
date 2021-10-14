@@ -26,20 +26,12 @@ const HeaderIdentityArea = () => {
 						<Avatar
 							size={40}
 							style={{ marginBottom: '3px', marginLeft: '20px' }}
-							src='https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/143887425_229254258845639_1889614086996814793_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=7-TTNLDjmkEAX8zVwVa&_nc_ht=scontent.fsgn2-3.fna&oh=aa8a0050026faf0fcc1aaaff12fd039e&oe=615BB71A'
+							src='https://bookingmedtravel.com/img/userimage.png'
 						/>
 					</Dropdown>
 				</>
 			) : (
 				<>
-					{/* <Button
-						type="primary"
-						onClick={onOpenIdentityModal}
-						shape="round"
-						icon={<UserOutlined />}
-					>
-						Tài khoản
-					</Button> */}
 					<Dropdown
 						overlay={<IdentityMenuData />}
 						trigger={['click']}
