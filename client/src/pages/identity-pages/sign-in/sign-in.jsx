@@ -18,7 +18,7 @@ export const SignInPage = (values) => {
 
 	const LogoHeader = () => {
 		return (
-			<Link to='/public'>
+			<Link to='/'>
 				<img
 					style={{ width: '100%' }}
 					src='https://logonoid.com/images/codingame-logo.png'

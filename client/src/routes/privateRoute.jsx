@@ -1,16 +1,17 @@
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-	//Gọi xác thực từ đây
-	const isUserLogin = true;
+	const isSignIn = useSelector((state) => state.user.isSignIn);
+
 	return (
 		<Route
 			{...rest}
 			render={({ location }) => {
-				return isUserLogin ? (
+				return isSignIn ? (
 					<Component />
 				) : (
-					<Redirect to={{ pathname: "/signin", state: { from: location } }} />
+					<Redirect to={{ pathname: '/identity/sign-in', state: { from: location } }} />
 				);
 			}}
 		/>

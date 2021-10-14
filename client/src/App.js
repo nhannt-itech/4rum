@@ -27,8 +27,11 @@ const App = () => {
 						<Route exact path='/' component={HomePage}></Route>
 						<Route exact path='/post' component={PostPage}></Route>
 						<Route exact path='/post/:id' component={PostDetailPage}></Route>
-						<Route exact path='/create-post' component={CreatePostPage}></Route>
-						{/* <PrivateRoute exact path="/course/:id" component={CourseDetailPage} /> */}
+						<PrivateRoute
+							exact
+							path='/create-post'
+							component={CreatePostPage}
+						></PrivateRoute>
 					</Switch>
 				</DashboardLayout>
 			</Route>
