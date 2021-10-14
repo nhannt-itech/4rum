@@ -1,10 +1,9 @@
 const Chat = require('../models/chat');
-const User = require('../models/user');
 
 const { success, error } = require('../utils/responseApi');
 
 module.exports = {
-	async getAll(req, res, next) {
+	async getAll(socket) {
 		try {
 			const chats = await Chat.find({})
 				.populate({
@@ -13,9 +12,9 @@ module.exports = {
 				})
 				.sort({ createdAt: 'desc' })
 				.limit(20);
-			return res.status(200).json(success(chats, 'OK', res.statusCode));
+			socket.emit('ChatRoom', chats);
 		} catch (err) {
-			next(err);
+			socket.emit('ChatRoom', []);
 		}
 	},
 	//authorize
@@ -28,6 +27,7 @@ module.exports = {
 			return res.status(200).json(success(doc, 'OK', res.statusCode));
 		});
 	},
+	//authorize
 	async delete(req, res, next) {
 		const chatId = req.params.chatId || '';
 		Chat.findOneAndDelete({ _id: chatId }, function (err, docs) {

@@ -14,7 +14,7 @@ routes.get('/api/profile', auth(), UserController.profile);
 routes.post('/logout', auth(), UserController.logout);
 
 //Chat
-routes.get('/chat/getall', ChatController.getAll);
+// routes.get('/chat/getall', ChatController.getAll);
 routes.post('/chat/create', auth(), ChatController.create);
 routes.post('/chat/delete/:chatId', auth(['Admin', 'Mod']), ChatController.delete);
 

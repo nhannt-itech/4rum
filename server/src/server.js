@@ -5,8 +5,10 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const routes = require('./routes');
 const path = require('path');
+const http = require('http');
 const errorHandler = require('./middleware/error-handler');
 const app = express();
+const ChatController = require('./controllers/ChatController');
 
 const PORT = process.env.PORT || 8000;
 
@@ -52,7 +54,26 @@ try {
 /**
  * Any error handler middleware must be added AFTER you define your routes.
  */
-
-app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
 	console.log(`Listening on ${PORT}`);
+});
+
+// Socket.io
+const io = require('socket.io')(server, {
+	cors: corsOptions,
+});
+let interval;
+
+io.on('connection', (socket) => {
+	console.log('New client connected');
+	if (interval) {
+		clearInterval(interval);
+	}
+	interval = setInterval(() => {
+		ChatController.getAll(socket);
+	}, 1000);
+	socket.on('disconnect', () => {
+		console.log('Client disconnected');
+		clearInterval(interval);
+	});
 });

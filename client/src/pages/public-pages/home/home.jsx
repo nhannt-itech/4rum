@@ -7,7 +7,7 @@ const { TabPane } = Tabs;
 
 export const HomePage = () => {
 	return (
-		<div class='user-home-page'>
+		<div className='user-home-page'>
 			<div hidden className='header' style={{ marginTop: '-25px' }}>
 				<Title level={4}>
 					Xin chào "User". Chào mừng bạn đã đến với 4rum. Hãy khám phá nhé!
@@ -45,7 +45,7 @@ export const HomePage = () => {
 					</Card>
 				</Col>
 			</div>
-			<div>
+			<div hidden>
 				<Tabs defaultActiveKey='1' type='card' size={'large'}>
 					<TabPane tab='Thành Phố' key='1'>
 						<Empty description='Tính năng chưa phát triển' />
@@ -58,6 +58,7 @@ export const HomePage = () => {
 					</TabPane>
 				</Tabs>
 			</div>
+
 			<BoxChat />
 		</div>
 	);

@@ -14,7 +14,7 @@ const initialState = {
 /* ---------------------ACTIONS--------------------- */
 export const signUp = createAsyncThunk('user/signUp', async (params, thunkAPI) => {
 	try {
-		const res = UserAPI.signUp(params);
+		const res = await UserAPI.signUp(params);
 		return res;
 	} catch (err) {
 		return thunkAPI.rejectWithValue(err.response.data);
@@ -25,6 +25,7 @@ export const signIn = createAsyncThunk('user/signIn', async (params, thunkAPI) =
 	try {
 		const { userName, password } = params;
 		const res = await UserAPI.signIn({ userName, password });
+		console.log(res);
 		return res;
 	} catch (err) {
 		return thunkAPI.rejectWithValue(err.response.data);
@@ -66,7 +67,7 @@ const userSlice = createSlice({
 				state.requesting = false;
 				state.success = true;
 				state.isSignIn = true;
-				state.userId = action.payload.id;
+				state.userId = action.payload.results.id;
 				NotifyHelper.success('Bạn đã đăng nhập thành công!');
 			})
 			.addCase(signOut.fulfilled, (state, action) => {
