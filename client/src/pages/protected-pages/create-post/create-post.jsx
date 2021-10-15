@@ -1,8 +1,30 @@
 import { Card, Button, Col, Form, Input, Select } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw } from 'draft-js';
+import { useState } from 'react';
+import { NotifyHelper } from '../../../helpers';
+import { createPost } from '../../../redux/post.slice';
+import { useDispatch } from 'react-redux';
 
 export const CreatePostPage = () => {
+	const [editor, setEditor] = useState(EditorState.createEmpty());
+	const dispatch = useDispatch();
+
+	const submitPost = (values) => {
+		const summary = convertToRaw(editor.getCurrentContent())
+			.blocks.map((block) => (!block.text.trim() && '\n') || block.text)
+			.join('');
+
+		if (summary.length < 50) {
+			NotifyHelper.error('Bài viết phải trên 50 ký tự');
+		} else {
+			const content = JSON.stringify(convertToRaw(editor.getCurrentContent()));
+			console.log(content);
+			dispatch(createPost({ summary, content, ...values }));
+		}
+	};
+
 	const children = [];
 	for (let i = 10; i < 36; i++) {
 		children.push(
@@ -26,30 +48,20 @@ export const CreatePostPage = () => {
 	return (
 		<div>
 			<Card>
-				<Form {...responsiveForm}>
-					<Form.Item name='title' label='Tiêu đề' rules={[{ required: true }]}>
+				<Form onFinish={submitPost} {...responsiveForm}>
+					<Form.Item
+						name='title'
+						label='Tiêu đề'
+						rules={[{ required: true, message: 'Bạn phải nhập tiêu đề' }]}
+					>
 						<Input />
 					</Form.Item>
-					<Form.Item name='select' label='Gắn thẻ'>
-						<Select
-							mode='multiple'
-							placeholder='Please select'
-							defaultValue={['a10', 'c12']}
-							style={{ width: '100%' }}
-						>
-							{children}
-						</Select>
-					</Form.Item>
-					<Editor
-						editorStyle={{ height: '200px', margin: '20px 0 20px 10px' }}
-						wrapperClassName='demo-wrapper'
-						editorClassName='demo-editor'
-						placeholder='Bạn đang nghĩ gì...'
-					/>
+					<Editor onEditorStateChange={setEditor} placeholder='Bạn đang nghĩ gì...' />
 					<Col md={{ span: 6, offset: 18 }} xs={24}>
 						<Button
 							style={{ width: '100%' }}
 							type='primary'
+							htmlType='submit'
 							className='button'
 							icon={<SendOutlined />}
 						>

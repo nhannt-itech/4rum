@@ -4,7 +4,6 @@ import DashboardLayout from './layout/dashboard-layout/dashboard-layout';
 import IdentityLayout from './layout/identity-layout/identity-layout';
 import PrivateRoute from './routes/privateRoute';
 import { ForgotPasswordPage, SignUpPage, SignInPage } from './pages/identity-pages';
-
 import { CreatePostPage } from './pages/protected-pages';
 import { HomePage, PostPage, PostDetailPage } from './pages/public-pages';
 
@@ -26,7 +25,7 @@ const App = () => {
 					<Switch>
 						<Route exact path='/' component={HomePage}></Route>
 						<Route exact path='/post' component={PostPage}></Route>
-						<Route exact path='/post/:id' component={PostDetailPage}></Route>
+						<Route exact path='/post/:postId' component={PostDetailPage}></Route>
 						<PrivateRoute
 							exact
 							path='/create-post'

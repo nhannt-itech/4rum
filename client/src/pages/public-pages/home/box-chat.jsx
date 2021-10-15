@@ -1,8 +1,8 @@
-import { Card, Comment, Avatar, Form, Button, List, Input, Tooltip } from 'antd';
+import { Card, Comment, Avatar, Form, List, Input, Tooltip } from 'antd';
 import moment from 'moment';
 import { CommentOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createChat } from './chat.slice';
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = 'http://127.0.0.1:8000';

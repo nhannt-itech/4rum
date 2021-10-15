@@ -1,23 +1,31 @@
-import React from "react";
-import { Input, Col, Row, Button } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import PostItem from "./post-item";
-import "./post.styles.scss";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, getAllPost, deletePost } from '../../../redux/post.slice';
+import './post.styles.scss';
+import { Input, Col, Row, Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
+import PostItem from './post-item';
 
 export const PostPage = () => {
 	const history = useHistory();
+	const dispatch = useDispatch();
+
+	const posts = useSelector((state) => state.post.posts);
+
+	useEffect(() => {
+		dispatch(getAllPost());
+	}, []);
 
 	const post = {
-		ImageUrl:
-			"https://scontent.fsgn13-2.fna.fbcdn.net/v/t1.6435-9/143887425_229254258845639_1889614086996814793_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=7-TTNLDjmkEAX-WVuL5&_nc_ht=scontent.fsgn13-2.fna&oh=f7ae3e325ba2161b7208a3bb1511e37a&oe=6157C29A",
-		Title: "Đây là một bài viết vui",
+		ImageUrl: 'https://bookingmedtravel.com/img/userimage.png',
+		Title: 'Đây là một bài viết vui',
 		UpVote: 10,
 		DownVote: 100,
 		Summary:
-			"Khóa học lập trình C cho người mới bắt đầu. Khóa học này sẽ rất là tuyệt vời và thú vị, khiến bạn sẽ không buồn chán trong việc học lập trình",
-		CreateAt: "10 giờ trước",
-		CreateBy: "Nguyễn Thanh Nhân",
+			'Khóa học lập trình C cho người mới bắt đầu. Khóa học này sẽ rất là tuyệt vời và thú vị, khiến bạn sẽ không buồn chán trong việc học lập trình',
+		CreateAt: '10 giờ trước',
+		CreateBy: 'Nguyễn Thanh Nhân',
 		TotalComment: 100,
 	};
 
@@ -42,13 +50,17 @@ export const PostPage = () => {
 
 	return (
 		<div>
-			<Row className="post-page-search">
+			<Row className='post-page-search'>
 				<Col {...responsive.search}>
 					<Input.Group compact>
-						<Input.Search className="input" placeholder="Tìm kiếm bài viết..." enterButton />
+						<Input.Search
+							className='input'
+							placeholder='Tìm kiếm bài viết...'
+							enterButton
+						/>
 						<Button
-							onClick={() => history.push("/create-post")}
-							className="button"
+							onClick={() => history.push('/create-post')}
+							className='button'
 							icon={<EditOutlined />}
 						>
 							Viết bài
@@ -57,9 +69,9 @@ export const PostPage = () => {
 				</Col>
 			</Row>
 			<Row gutter={[16, 20]}>
-				{[...Array(8)].map((item, index) => (
+				{posts.map((item, index) => (
 					<Col key={index} {...responsive.post}>
-						<PostItem post={post}></PostItem>
+						<PostItem post={item}></PostItem>
 					</Col>
 				))}
 			</Row>

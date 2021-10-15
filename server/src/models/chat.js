@@ -11,10 +11,6 @@ const chatSchema = new mongoose.Schema(
 			type: Schema.Types.ObjectId,
 			ref: 'User',
 		},
-		createAt: {
-			type: Date,
-			default: Date.Now,
-		},
 	},
 	{
 		timestamps: true,
