@@ -10,7 +10,11 @@ let auth = (roles = []) => {
 
 		User.findByToken(token, (err, user) => {
 			if (err) next(err.message);
-			if (!user) return res.status(401).json(error('Bạn phải đăng nhập', res.statusCode));
+			if (!user)
+				return res
+					.status(401)
+					.clearCookie('auth', { path: '/' })
+					.json(error('Bạn phải đăng nhập', res.statusCode));
 
 			if (roles.length && !roles.includes(user.role))
 				return res.status(401).json(error('Bạn không có quyền truy cập', res.statusCode));

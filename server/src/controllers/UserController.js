@@ -31,13 +31,11 @@ module.exports = {
 	},
 
 	async login(req, res, next) {
-		let token = req.cookies.auth;
-		User.findByToken(token, (err, userToken) => {
-			if (userToken)
-				return res.status(400).json(error('Bạn đã đăng nhập', res.statusCode));
-			// return res
-			// 	.status(200)
-			// 	.json(success(req.body.userName, 'Bạn đã đăng nhập', res.statusCode));
+		User.findByToken(req.cookies.auth, (err, user) => {
+			if (user) {
+				return res.status(200).json(success(user, 'OK', res.statusCode));
+			}
+
 			User.findOne({ userName: req.body.userName }, function (err, user) {
 				if (!user)
 					return res
@@ -71,15 +69,8 @@ module.exports = {
 
 	async logout(req, res, next) {
 		req.user.deleteToken(req.token, (err, user) => {
-			if (err) return res.status(400).send(err);
-
+			if (err) next(err);
 			res.clearCookie('auth', { path: '/' }).sendStatus(200);
-		});
-	},
-
-	async profile(req, res, next) {
-		res.json({
-			isAuth: true,
 		});
 	},
 };

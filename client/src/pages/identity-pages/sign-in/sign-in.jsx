@@ -1,20 +1,26 @@
 import { useLocation, Redirect, Link } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Card } from 'antd';
+import { useEffect } from 'react';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsSignUp, signIn } from '../../../redux/user.slice';
+import { setIsSignUp, setIsSignIn, signIn } from '../../../redux/user.slice';
+import Cookies from 'js-cookies';
 
 export const SignInPage = (values) => {
 	const dispatch = useDispatch();
 	const isSignIn = useSelector((state) => state.user.isSignIn);
+	const auth = Cookies.getItem('auth');
+	const { state } = useLocation();
 
-	dispatch(setIsSignUp(false));
+	useEffect(() => {
+		dispatch(setIsSignUp(false));
+		return () => dispatch(setIsSignIn(false));
+	}, []);
 
 	const SignIn = (values) => {
 		dispatch(signIn(values));
 	};
-	const { state } = useLocation();
-	if (isSignIn) return <Redirect to={state?.from || '/'} />;
+	if (isSignIn || auth) return <Redirect to={state?.from || '/'} />;
 
 	const LogoHeader = () => {
 		return (

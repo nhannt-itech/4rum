@@ -8,14 +8,21 @@ import socketIOClient from 'socket.io-client';
 const ENDPOINT = 'http://127.0.0.1:8000';
 
 const BoxChat = () => {
-	const [chats, setChats] = useState([]);
-	const [form] = Form.useForm();
 	const dispatch = useDispatch();
+	//Danh sách chat
+	const [chats, setChats] = useState([]);
+	//Chat hiện tại
+	const [chat, setChat] = useState('');
 
-	const doChat = (values) => {
-		if (values.content) {
-			form.resetFields();
-			dispatch(createChat(values));
+	const onChatChange = (e) => {
+		setChat(e.target.value);
+	};
+
+	const onSubmitChat = (e) => {
+		let content = e.target.value;
+		if (content) {
+			dispatch(createChat({ content }));
+			setChat('');
 		}
 	};
 
@@ -27,64 +34,59 @@ const BoxChat = () => {
 		return () => socket.disconnect();
 	}, []);
 
+	const chatItem = (item) => {
+		return (
+			<li>
+				<Comment
+					author={item.author.userName}
+					avatar='https://bookingmedtravel.com/img/userimage.png'
+					content={item.content}
+					datetime={
+						<Tooltip title={moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+							<span>{moment(item.createdAt).fromNow()}</span>
+						</Tooltip>
+					}
+				/>
+			</li>
+		);
+	};
+
 	return (
 		<div>
-			<div style={{ marginTop: '15px' }}>
-				<Card
-					title={
-						<div>
-							<CommentOutlined />
-							{' Phòng chat'}
-						</div>
+			<Card
+				title={
+					<>
+						<CommentOutlined />
+						{' Phòng chat'}
+					</>
+				}
+			>
+				<Comment
+					avatar={
+						<Avatar
+							className='avatar'
+							src='https://bookingmedtravel.com/img/userimage.png'
+							alt='User'
+						/>
 					}
-				>
-					<Comment
-						avatar={
-							<div className='comment-avatar-container'>
-								<Avatar
-									className='avatar'
-									src='https://bookingmedtravel.com/img/userimage.png'
-									alt='User'
-								/>
-							</div>
-						}
-						content={
-							<Form
-								style={{ marginBottom: '50px' }}
-								form={form}
-								name='chat'
-								className='chat-form'
-								onFinish={doChat}
-							>
-								<Form.Item name='content'>
-									<Input autocomplete='off' />
-								</Form.Item>
-							</Form>
-						}
-					/>
-					<List
-						style={{ marginTop: '-40px' }}
-						className='comment-list'
-						itemLayout='horizontal'
-						dataSource={chats}
-						renderItem={(item) => (
-							<li>
-								<Comment
-									// actions={item.actions}
-									author={item.author.userName}
-									avatar='https://bookingmedtravel.com/img/userimage.png'
-									content={item.content}
-									datetime={
-										<Tooltip title={moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
-											<span>{moment(item.createdAt).fromNow()}</span>
-										</Tooltip>
-									}
-								/>
-							</li>
-						)}
-					/>
-				</Card>
-			</div>
+					content={
+						<Input
+							value={chat}
+							onChange={onChatChange}
+							onPressEnter={onSubmitChat}
+							autoComplete='off'
+							style={{ marginBottom: '40px' }}
+						/>
+					}
+				/>
+				<List
+					style={{ marginTop: '-40px' }}
+					className='comment-list'
+					itemLayout='horizontal'
+					dataSource={chats}
+					renderItem={chatItem}
+				/>
+			</Card>
 		</div>
 	);
 };

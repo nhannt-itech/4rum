@@ -11,7 +11,6 @@ const routes = express.Router();
 routes.post('/register', UserController.register);
 routes.post('/login', UserController.login);
 routes.get('/user/:userId', UserController.getUserById);
-routes.get('/api/profile', auth(), UserController.profile);
 routes.post('/logout', auth(), UserController.logout);
 
 //Chat

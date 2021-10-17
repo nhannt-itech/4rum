@@ -17,7 +17,6 @@ module.exports = {
 			socket.emit('ChatRoom', []);
 		}
 	},
-	//authorize
 	async create(req, res, next) {
 		const user = req.user;
 
@@ -27,7 +26,6 @@ module.exports = {
 			return res.status(200).json(success(doc, 'OK', res.statusCode));
 		});
 	},
-	//authorize
 	async delete(req, res, next) {
 		const chatId = req.params.chatId || '';
 		Chat.findOneAndDelete({ _id: chatId }, function (err, docs) {

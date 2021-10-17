@@ -54,6 +54,9 @@ const userSlice = createSlice({
 		setIsSignUp: (state, action) => {
 			state.isSignUp = action.payload;
 		},
+		setIsSignIn: (state, action) => {
+			state.isSignIn = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -75,9 +78,8 @@ const userSlice = createSlice({
 				state.success = true;
 				state.isSignIn = false;
 				state.userId = null;
-				NotifyHelper.success('Bạn đã đăng xuất thành công!');
+				window.location.reload();
 			})
-
 			//Sử dụng chung cho tất cả pending và rejected
 			.addMatcher(pendingAction, (state) => {
 				state.success = false;
@@ -95,6 +97,6 @@ const userSlice = createSlice({
 			});
 	},
 });
-export const { setIsSignUp } = userSlice.actions;
+export const { setIsSignUp, setIsSignIn } = userSlice.actions;
 
 export default userSlice.reducer;

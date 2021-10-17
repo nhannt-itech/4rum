@@ -1,14 +1,16 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import Cookies from 'js-cookies';
+import { useEffect } from 'react';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-	const isSignIn = useSelector((state) => state.user.isSignIn);
+	let auth = Cookies.getItem('auth');
 
+	console.log(Cookies.getItem('auth'));
 	return (
 		<Route
 			{...rest}
 			render={({ location }) => {
-				return isSignIn ? (
+				return auth ? (
 					<Component />
 				) : (
 					<Redirect to={{ pathname: '/identity/sign-in', state: { from: location } }} />

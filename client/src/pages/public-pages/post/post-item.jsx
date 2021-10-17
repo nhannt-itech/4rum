@@ -4,7 +4,7 @@ import { CaretUpOutlined, CaretDownOutlined, CommentOutlined } from '@ant-design
 import { Link } from 'react-router-dom';
 const PostItem = ({ post }) => {
 	return (
-		<Link to={'/post/' + post._id}>
+		<Link to={`/post/${post._id}`}>
 			<Card hoverable bordered={false}>
 				<Card.Meta
 					title={post.title}

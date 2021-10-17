@@ -1,45 +1,31 @@
-const Swal = require('sweetalert2');
-
-const Toast = Swal.mixin({
-	toast: true,
-	position: 'top-end',
-	showConfirmButton: false,
-	timerProgressBar: true,
-	didOpen: (toast) => {
-		toast.addEventListener('mouseenter', Swal.stopTimer);
-		toast.addEventListener('mouseleave', Swal.resumeTimer);
-	},
-});
+import { notification } from 'antd';
 
 export const NotifyHelper = {
-	success: (title) => {
-		Toast.fire({
-			icon: 'success',
-			title,
+	success: (message, title = 'Thành công') => {
+		notification['success']({
+			message: title,
+			description: message,
 		});
 	},
-	warning: (title) => {
-		Toast.fire({
-			icon: 'warning',
-			title,
+
+	info: (message, title = 'Thông tin') => {
+		notification['info']({
+			message: title,
+			description: message,
 		});
 	},
-	error: (title) => {
-		Toast.fire({
-			icon: 'error',
-			title,
+
+	warning: (message, title = 'Cảnh báo') => {
+		notification['warning']({
+			message: title,
+			description: message,
 		});
 	},
-	info: (title) => {
-		Toast.fire({
-			icon: 'info',
-			title,
-		});
-	},
-	question: (title) => {
-		Toast.fire({
-			icon: 'question',
-			title,
+
+	error: (message, title = 'Thất bại') => {
+		notification['error']({
+			message: title,
+			description: message,
 		});
 	},
 };

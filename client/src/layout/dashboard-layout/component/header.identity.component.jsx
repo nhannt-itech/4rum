@@ -3,11 +3,12 @@ import { UserOutlined, BellOutlined } from '@ant-design/icons';
 import { IdentityMenuData, UserMenuData } from '../dashboard-layout.data';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from '../../../redux/user.slice';
+import Cookies from 'js-cookies';
 
 const HeaderIdentityArea = () => {
-	const dispatch = useDispatch();
+	let auth = Cookies.getItem('auth');
 
-	const isSignIn = useSelector((state) => state.user.isSignIn);
+	const dispatch = useDispatch();
 
 	const onSignOut = () => {
 		dispatch(signOut());
@@ -15,7 +16,7 @@ const HeaderIdentityArea = () => {
 
 	return (
 		<>
-			{isSignIn ? (
+			{auth ? (
 				<>
 					<Button shape='circle' icon={<BellOutlined />} />
 					<Dropdown
