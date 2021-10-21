@@ -44,41 +44,36 @@ userSchema.pre('save', function (next) {
 	}
 });
 
-userSchema.methods.comparePassword = function (password, cb) {
-	bcrypt.compare(password, this.password, function (err, isMatch) {
-		if (err) return cb(next);
-		cb(null, isMatch);
-	});
+userSchema.methods.comparePassword = async function (password) {
+	const user = this;
+
+	const isMatch = await bcrypt.compare(password, user.password);
+	return isMatch;
 };
 
-userSchema.methods.generateToken = function (cb) {
-	var user = this;
-	var token = jwt.sign(user._id.toHexString(), process.env.SESSION_SECRET);
-
-	user.token = token;
-	user.save(function (err, user) {
-		if (err) return cb(err);
-		cb(null, user);
-	});
+userSchema.statics.findByToken = async function (token) {
+	if (!token) {
+		return null;
+	} else {
+		const decode = await jwt.verify(token, process.env.SESSION_SECRET);
+		const doc = await this.findOne({ _id: decode, token: token });
+		return doc;
+	}
 };
 
-userSchema.statics.findByToken = function (token, cb) {
-	var user = this;
-	jwt.verify(token, process.env.SESSION_SECRET, function (err, decode) {
-		user.findOne({ _id: decode, token: token }, function (err, user) {
-			if (err) return cb(err);
-			cb(null, user);
-		});
-	});
+userSchema.methods.generateToken = async function () {
+	const user = this;
+
+	user.token = await jwt.sign(user._id.toHexString(), process.env.SESSION_SECRET);
+	const doc = await user.save();
+	return doc;
 };
 
-userSchema.methods.deleteToken = function (token, cb) {
-	var user = this;
+userSchema.methods.deleteToken = async function () {
+	const user = this;
 
-	user.update({ $unset: { token: 1 } }, function (err, user) {
-		if (err) return cb(err);
-		cb(null, user);
-	});
+	const doc = await user.update({ $unset: { token: 1 } });
+	return doc;
 };
 
 module.exports = mongoose.model('User', userSchema);

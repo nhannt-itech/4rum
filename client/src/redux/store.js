@@ -15,6 +15,7 @@ import {
 } from 'redux-persist';
 import chatSlice from '../pages/public-pages/home/chat.slice';
 import postSlice from './post.slice';
+import commentSlice from '../pages/public-pages/post-detail/comment.slice';
 
 const persistConfig = {
 	key: 'root',
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 	settings: settingsSlice,
 	chat: chatSlice,
 	post: postSlice,
+	comment: commentSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

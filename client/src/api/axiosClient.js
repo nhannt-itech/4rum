@@ -15,13 +15,16 @@ axiosClient.interceptors.request.use(async (config) => {
 });
 
 axiosClient.interceptors.response.use(
-	async (response) => {
+	(response) => {
 		if (response && response.data) {
 			return response.data;
 		}
 		return response.data;
 	},
 	(error) => {
+		if (error.response && error.response.status === 401) {
+			window.location.reload();
+		}
 		throw error;
 	}
 );

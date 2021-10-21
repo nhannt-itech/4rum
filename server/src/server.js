@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const path = require('path');
 const http = require('http');
+const querystring = require('querystring');
 const errorHandler = require('./middleware/error-handler');
 const app = express();
 const ChatController = require('./controllers/ChatController');
@@ -13,13 +14,13 @@ const ChatController = require('./controllers/ChatController');
 const PORT = process.env.PORT || 8000;
 
 var corsOptions = {
-	origin: function (origin, callback) {
-		if (['http://localhost:3000', 'http://example2.com'].indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error('Not allowed by CORS'));
-		}
-	},
+	// origin: function (origin, callback) {
+	// 	if (['http://localhost:3000', 'http://example2.com'].indexOf(origin) !== -1) {
+	// 		callback(null, true);
+	// 	} else {
+	// 		callback(new Error('Not allowed by CORS'));
+	// 	}
+	// },
 	credentials: true,
 };
 
