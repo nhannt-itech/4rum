@@ -1,17 +1,15 @@
 import axiosClient from './axiosClient';
 
 export const UserAPI = {
-	//Lưu ý ở hàm post nếu truyền params mà không có body thi phải truyển body = null
-
-	signUp: (params) => {
-		// return axiosClient.post(url, null, { params });
-		return axiosClient.post('/register', params);
+	signUp: (body) => {
+		//body: userName, fullName, password
+		return axiosClient.post('/user/signUp', body);
 	},
-	signIn: (params) => {
-		// return axiosClient.get('/login', { params });
-		return axiosClient.post('/login', params);
+	signIn: (body) => {
+		//body: userName, password
+		return axiosClient.post('/user/signIn', body);
 	},
 	signOut: () => {
-		return axiosClient.post('/logout');
+		return axiosClient.post('/user/signOut');
 	},
 };

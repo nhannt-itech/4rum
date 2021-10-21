@@ -1,16 +1,25 @@
 import axiosClient from './axiosClient';
 
 export const PostAPI = {
-	getAll: () => {
-		return axiosClient.get('/post/getAll');
+	create: (body) => {
+		//body: title, content, summary
+		return axiosClient.post('/post/create', body);
 	},
-	get: (params) => {
-		return axiosClient.get('/post/get/' + params.postId);
+	readMany: (params) => {
+		//query: offset[nullable], pagesize[nullable]
+		return axiosClient.get('/post/readMany', { params });
 	},
-	create: (params) => {
-		return axiosClient.post('/post/create', params);
+	readOne: (params) => {
+		//query: _id
+		return axiosClient.get('/post/readOne', { params });
+	},
+	update: (params, body) => {
+		//query: _id
+		//body: title, content, summary
+		return axiosClient.post('/post/update', body, { params });
 	},
 	delete: (params) => {
+		//query: _id
 		return axiosClient.post('/post/delete', null, { params });
 	},
 };

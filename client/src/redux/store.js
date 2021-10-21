@@ -1,8 +1,8 @@
-import { combineReducers, compose } from 'redux';
-import storage from 'redux-persist/lib/storage';
-import userSlice from './user.slice';
-import settingsSlice from './settings.slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, compose } from "redux";
+import storage from "redux-persist/lib/storage";
+import userSlice from "./user.slice";
+import settingsSlice from "./settings.slice";
+import { configureStore } from "@reduxjs/toolkit";
 import {
 	persistStore,
 	persistReducer,
@@ -12,15 +12,15 @@ import {
 	PERSIST,
 	PURGE,
 	REGISTER,
-} from 'redux-persist';
-import chatSlice from '../pages/public-pages/home/chat.slice';
-import postSlice from './post.slice';
-import commentSlice from '../pages/public-pages/post-detail/comment.slice';
+} from "redux-persist";
+import chatSlice from "../pages/public-pages/home/chat.slice";
+import postSlice from "./post.slice";
+import commentSlice from "./comment.slice";
 
 const persistConfig = {
-	key: 'root',
+	key: "root",
 	storage,
-	whitelist: ['user'],
+	whitelist: ["user"],
 };
 
 const rootReducer = combineReducers({
@@ -37,7 +37,14 @@ const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
-				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+				ignoredActions: [
+					FLUSH,
+					REHYDRATE,
+					PAUSE,
+					PERSIST,
+					PURGE,
+					REGISTER,
+				],
 			},
 		}),
 	// Khi đẩy lên host thì bật devTools: false

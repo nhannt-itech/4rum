@@ -1,29 +1,29 @@
-import { notification } from 'antd';
+import { notification } from "antd";
 
 export const NotifyHelper = {
-	success: (message, title = 'Thành công') => {
-		notification['success']({
+	success: (message, title = "Success") => {
+		notification["success"]({
 			message: title,
 			description: message,
 		});
 	},
 
-	info: (message, title = 'Thông tin') => {
-		notification['info']({
+	info: (message, title = "Info") => {
+		notification["info"]({
 			message: title,
 			description: message,
 		});
 	},
 
-	warning: (message, title = 'Cảnh báo') => {
-		notification['warning']({
+	warning: (message, title = "Warning") => {
+		notification["warning"]({
 			message: title,
 			description: message,
 		});
 	},
 
-	error: (message, title = 'Thất bại') => {
-		notification['error']({
+	error: (message, title = "Error") => {
+		notification["error"]({
 			message: title,
 			description: message,
 		});

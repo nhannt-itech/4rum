@@ -1,18 +1,20 @@
-import { Card, Comment, Avatar, Form, List, Input, Tooltip } from 'antd';
-import moment from 'moment';
-import { CommentOutlined } from '@ant-design/icons';
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createChat } from './chat.slice';
-import socketIOClient from 'socket.io-client';
-const ENDPOINT = 'http://127.0.0.1:8000';
+import { Card, Comment, Avatar, Form, List, Input, Tooltip } from "antd";
+import moment from "moment";
+import { CommentOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { createChat } from "./chat.slice";
+import socketIOClient from "socket.io-client";
+import Cookies from "js-cookies";
+const ENDPOINT = "http://127.0.0.1:8000";
 
 const BoxChat = () => {
+	const auth = Cookies.getItem("auth");
 	const dispatch = useDispatch();
 	//Danh sách chat
 	const [chats, setChats] = useState([]);
 	//Chat hiện tại
-	const [chat, setChat] = useState('');
+	const [chat, setChat] = useState("");
 
 	const onChatChange = (e) => {
 		setChat(e.target.value);
@@ -22,13 +24,13 @@ const BoxChat = () => {
 		let content = e.target.value;
 		if (content) {
 			dispatch(createChat({ content }));
-			setChat('');
+			setChat("");
 		}
 	};
 
 	useEffect(() => {
 		const socket = socketIOClient(ENDPOINT);
-		socket.on('ChatRoom', (data) => {
+		socket.on("ChatRoom", (data) => {
 			setChats(data);
 		});
 		return () => socket.disconnect();
@@ -39,10 +41,10 @@ const BoxChat = () => {
 			<li>
 				<Comment
 					author={item.author.userName}
-					avatar='https://bookingmedtravel.com/img/userimage.png'
+					avatar="https://bookingmedtravel.com/img/userimage.png"
 					content={item.content}
 					datetime={
-						<Tooltip title={moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+						<Tooltip title={moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")}>
 							<span>{moment(item.createdAt).fromNow()}</span>
 						</Tooltip>
 					}
@@ -57,32 +59,32 @@ const BoxChat = () => {
 				title={
 					<>
 						<CommentOutlined />
-						{' Phòng chat'}
+						{" BOX CHAT"}
 					</>
 				}
 			>
-				<Comment
-					avatar={
-						<Avatar
-							className='avatar'
-							src='https://bookingmedtravel.com/img/userimage.png'
-							alt='User'
-						/>
-					}
-					content={
-						<Input
-							value={chat}
-							onChange={onChatChange}
-							onPressEnter={onSubmitChat}
-							autoComplete='off'
-							style={{ marginBottom: '40px' }}
-						/>
-					}
-				/>
+				{auth && (
+					<Comment
+						avatar={
+							<Avatar
+								className="avatar"
+								src="https://bookingmedtravel.com/img/userimage.png"
+								alt="User"
+							/>
+						}
+						content={
+							<Input
+								value={chat}
+								onChange={onChatChange}
+								onPressEnter={onSubmitChat}
+								autoComplete="off"
+							/>
+						}
+					/>
+				)}
 				<List
-					style={{ marginTop: '-40px' }}
-					className='comment-list'
-					itemLayout='horizontal'
+					className="comment-list"
+					itemLayout="horizontal"
 					dataSource={chats}
 					renderItem={chatItem}
 				/>

@@ -1,22 +1,16 @@
-import { Menu } from 'antd';
-import { Link } from 'react-router-dom';
-import {
-	UserOutlined,
-	UserAddOutlined,
-	HomeOutlined,
-	NotificationOutlined,
-	EditOutlined,
-} from '@ant-design/icons';
+import { Menu } from "antd";
+import { Link } from "react-router-dom";
+import { UserOutlined, UserAddOutlined, HomeOutlined, EditOutlined } from "@ant-design/icons";
 
 export const HeaderMenuData = [
 	{
-		title: 'Trang chủ',
-		url: '/',
+		title: "Home",
+		url: "/",
 		icon: HomeOutlined,
 	},
 	{
-		title: 'Thảo luận',
-		url: '/post',
+		title: "Share",
+		url: "/post",
 		icon: EditOutlined,
 	},
 ];
@@ -24,35 +18,32 @@ export const HeaderMenuData = [
 export const IdentityMenuData = () => (
 	<Menu>
 		<Menu.Item>
-			<Link to='/identity/sign-in'>
-				<UserOutlined /> Đăng nhập
+			<Link to="/identity/sign-in">
+				<UserOutlined /> Sign In
 			</Link>
 		</Menu.Item>
 		<Menu.Item>
-			<Link to='/identity/sign-up'>
-				<UserAddOutlined /> Đăng ký
+			<Link to="/identity/sign-up">
+				<UserAddOutlined /> Sign Up
 			</Link>
 		</Menu.Item>
 	</Menu>
 );
 
 export const UserMenuData = ({ onSignOut }) => (
-	<Menu style={{ width: '200px' }}>
-		<Menu.Item>
-			<Link to='/'>Thông tin của tôi</Link>
-		</Menu.Item>
-		<Menu.Item onClick={onSignOut}>Đăng xuất</Menu.Item>
+	<Menu style={{ width: "200px" }}>
+		<Menu.Item onClick={onSignOut}>Sign Out</Menu.Item>
 	</Menu>
 );
 
 export const LanguageMenuData = (
-	<Menu className='language-menu-items'>
+	<Menu className="language-menu-items">
 		<Menu.Item>
-			<img src='/images/icons/vn.png' alt='' />
+			<img src="/images/icons/vn.png" alt="" />
 			Việt Nam
 		</Menu.Item>
 		<Menu.Item>
-			<img src='/images/icons/en.png' alt='' />
+			<img src="/images/icons/en.png" alt="" />
 			Tiếng Anh
 		</Menu.Item>
 	</Menu>

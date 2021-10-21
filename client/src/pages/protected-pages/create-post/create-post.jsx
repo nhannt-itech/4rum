@@ -19,15 +19,14 @@ export const CreatePostPage = () => {
 		} else if (summary > 1000) {
 			NotifyHelper.warning('Bài viết của bạn hơn 1000 ký tự');
 		} else {
-			dispatch(createPost({ summary, content, ...values }));
+			const params = { summary, content, ...values };
+			dispatch(createPost({ params }));
 		}
 	};
 
 	const children = [];
 	for (let i = 10; i < 36; i++) {
-		children.push(
-			<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>
-		);
+		children.push(<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>);
 	}
 
 	const responsiveForm = {
