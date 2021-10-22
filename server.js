@@ -5,11 +5,12 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const routes = require("./routes");
 const path = require("path");
+require("dotenv").config();
 const errorHandler = require("./middleware/error-handler");
 const app = express();
 const ChatController = require("./controllers/ChatController");
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 var corsOptions = {
 	origin: function (origin, callback) {
@@ -32,7 +33,6 @@ app.use(morgan("tiny"));
 app.use(routes);
 app.use(errorHandler);
 app.use(express.static(path.join(__dirname, "client", "build")));
-require("dotenv").config();
 
 // if (process.env.NODE_ENV !== "production") {
 // 	require("dotenv").config();
