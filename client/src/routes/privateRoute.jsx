@@ -1,11 +1,11 @@
-import { Route, Redirect } from 'react-router-dom';
-import Cookies from 'js-cookies';
-import { useEffect } from 'react';
+import { Route, Redirect } from "react-router-dom";
+import Cookies from "js-cookies";
+import { useEffect } from "react";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-	let auth = Cookies.getItem('auth');
+	let auth = Cookies.getItem("auth");
 
-	console.log(Cookies.getItem('auth'));
+	console.log(Cookies.getItem("auth"));
 	return (
 		<Route
 			{...rest}
@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 				return auth ? (
 					<Component />
 				) : (
-					<Redirect to={{ pathname: '/identity/sign-in', state: { from: location } }} />
+					<Redirect to={{ pathname: "/identity/sign-in", state: { from: location } }} />
 				);
 			}}
 		/>
