@@ -52,9 +52,7 @@ var server = app.listen(PORT, () => {
 });
 
 // Socket.io
-const io = require("socket.io")(server, {
-	cors: corsOptions,
-});
+const io = require("socket.io")(server);
 
 let interval;
 io.on("connection", (socket) => {
