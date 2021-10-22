@@ -1,13 +1,25 @@
 import axios from "axios";
 import queryString from "querystring";
+const isDevelop = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
-const axiosClient = axios.create({
-	headers: {
-		"Content-Type": "application/json",
-	},
-	paramsSerializer: (params) => queryString.stringify(params),
-	withCredentials: true,
-});
+const axiosClient = axios.create(
+	isDevelop
+		? {
+				baseURL: process.env.REACT_APP_API_URL,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				paramsSerializer: (params) => queryString.stringify(params),
+				withCredentials: true,
+		  }
+		: {
+				headers: {
+					"Content-Type": "application/json",
+				},
+				paramsSerializer: (params) => queryString.stringify(params),
+				withCredentials: true,
+		  }
+);
 
 axiosClient.interceptors.request.use(async (config) => {
 	return config;

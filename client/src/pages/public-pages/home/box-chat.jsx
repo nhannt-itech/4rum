@@ -6,13 +6,12 @@ import { useDispatch } from "react-redux";
 import { createChat } from "./chat.slice";
 import socketIOClient from "socket.io-client";
 import Cookies from "js-cookies";
+const isDevelop = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
 const BoxChat = () => {
 	const auth = Cookies.getItem("auth");
 	const dispatch = useDispatch();
-	//Danh sách chat
 	const [chats, setChats] = useState([]);
-	//Chat hiện tại
 	const [chat, setChat] = useState("");
 
 	const onChatChange = (e) => {
@@ -28,7 +27,9 @@ const BoxChat = () => {
 	};
 
 	useEffect(() => {
-		const socket = socketIOClient();
+		const socket = isDevelop
+			? socketIOClient(process.env.REACT_APP_SOCKET_ENDPOINT)
+			: socketIOClient();
 		socket.on("ChatRoom", (data) => {
 			setChats(data);
 		});

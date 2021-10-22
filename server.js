@@ -1,18 +1,20 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
+const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const routes = require("./routes");
-const path = require("path");
 const errorHandler = require("./middleware/error-handler");
 const app = express();
 const ChatController = require("./controllers/ChatController");
+const isProduction = process.env.NODE_ENV === "production";
 
-if (process.env.NODE_ENV !== "production") require("dotenv").config;
+if (!isProduction) require("dotenv").config();
+
 const PORT = process.env.PORT || 5000;
 
-var corsOptions = {
+const corsOptions = {
 	origin: function (origin, callback) {
 		if ([process.env.ALLOWED_ORIGINS].indexOf(origin) !== -1) {
 			callback(null, true);
@@ -23,7 +25,7 @@ var corsOptions = {
 	credentials: true,
 };
 
-app.use(cors());
+isProduction ? app.use(cors()) : app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
@@ -41,8 +43,7 @@ try {
 	console.log(error);
 }
 
-//build mode
-if (process.env.NODE_ENV === "production") {
+if (isProduction) {
 	app.use(express.static(path.join(__dirname, "client/build")));
 	app.get("*", function (req, res) {
 		res.sendFile(path.join(__dirname, "client/build", "index.html"));
@@ -53,8 +54,13 @@ var server = app.listen(PORT, () => {
 	console.log(`Listening on ${PORT}`);
 });
 
-// Socket.io
-const io = require("socket.io")(server);
+var io;
+!isProduction
+	? (io = io =
+			require("socket.io")(server, {
+				cors: corsOptions,
+			}))
+	: (io = require("socket.io")(server));
 
 let interval;
 io.on("connection", (socket) => {
