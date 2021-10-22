@@ -24,14 +24,6 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "client/build")));
-	app.get("*", function (req, res) {
-		res.sendFile(path.join(__dirname, "client/build", "index.html"));
-	});
-}
-
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
@@ -55,11 +47,11 @@ try {
 	console.log(error);
 }
 
-/**
- * Any error handler middleware must be added AFTER you define your routes.
- */
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", function (req, res) {
+	res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
-// Right before your app.listen(), add this:
 var server = app.listen(PORT, () => {
 	console.log(`Listening on ${PORT}`);
 });
