@@ -1,4 +1,4 @@
-import { combineReducers, compose } from "redux";
+import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import userSlice from "./user.slice";
 import settingsSlice from "./settings.slice";
@@ -37,14 +37,7 @@ const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
-				ignoredActions: [
-					FLUSH,
-					REHYDRATE,
-					PAUSE,
-					PERSIST,
-					PURGE,
-					REGISTER,
-				],
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
 		}),
 	// Khi đẩy lên host thì bật devTools: false

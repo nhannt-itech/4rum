@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { readManyPost } from "../../../redux/post.slice";
 import "./post.styles.scss";
-import { Input, Col, Row, Button } from "antd";
+import { Input, Col, Row, Button, Spin } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import PostItem from "./post-item";
@@ -14,6 +15,7 @@ export const PostPage = () => {
 	const auth = Cookies.getItem("auth");
 
 	const posts = useSelector((state) => state.post.posts);
+	const isRequesting = useSelector((state) => state.post.requesting);
 
 	useEffect(() => {
 		dispatch(readManyPost());
@@ -62,11 +64,17 @@ export const PostPage = () => {
 				</Row>
 			)}
 			<Row gutter={[16, 20]}>
-				{posts.map((item, index) => (
-					<Col key={index} {...responsive.post}>
-						<PostItem post={item}></PostItem>
-					</Col>
-				))}
+				{isRequesting ? (
+					<div className="posts-loading ">
+						<Spin />
+					</div>
+				) : (
+					posts.map((item, index) => (
+						<Col key={index} {...responsive.post}>
+							<PostItem post={item}></PostItem>
+						</Col>
+					))
+				)}
 			</Row>
 		</div>
 	);

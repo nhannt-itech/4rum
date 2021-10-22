@@ -7,9 +7,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 export const SignInSignUpModal = () => {
 	const dispatch = useDispatch();
-	const isIdentityModalVisible = useSelector(
-		(state) => state.settings.isIdentityModalVisible
-	);
+	const isIdentityModalVisible = useSelector((state) => state.settings.isIdentityModalVisible);
 
 	const handleOk = () => {
 		dispatch(setIdentityModalVisible(false));
@@ -30,12 +28,7 @@ export const SignInSignUpModal = () => {
 				onCancel={handleCancel}
 				size="small"
 			>
-				<Form
-					name="normal_login"
-					className="login-form"
-					initialValues={{ remember: true }}
-					onFinish={() => console.log("finish")}
-				>
+				<Form name="normal_login" className="login-form" initialValues={{ remember: true }}>
 					<Form.Item
 						name="username"
 						rules={[{ required: true, message: "Please input your Username!" }]}

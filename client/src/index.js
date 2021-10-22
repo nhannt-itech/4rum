@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { store, persistedStore } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import reportWebVitals from "./reportWebVitals";
@@ -12,11 +12,11 @@ const history = createBrowserHistory();
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter history={history}>
+		<Router history={history}>
 			<PersistGate loading={null} persistor={persistedStore}>
 				<App />
 			</PersistGate>{" "}
-		</BrowserRouter>
+		</Router>
 	</Provider>,
 	document.getElementById("root")
 );

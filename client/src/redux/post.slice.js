@@ -1,17 +1,17 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { NotifyHelper } from '../helpers';
-import { PostAPI } from '../api';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { NotifyHelper } from "../helpers";
+import { PostAPI } from "../api";
 
 const initialState = {
 	post: null,
 	posts: [],
 	requesting: false,
 	success: false,
-	message: '',
+	message: "",
 };
 
 /* ---------------------ACTIONS--------------------- */
-export const createPost = createAsyncThunk('post/create', async (req, thunkAPI) => {
+export const createPost = createAsyncThunk("post/create", async (req, thunkAPI) => {
 	try {
 		const { params } = req;
 		const res = await PostAPI.create(params);
@@ -21,7 +21,7 @@ export const createPost = createAsyncThunk('post/create', async (req, thunkAPI) 
 	}
 });
 
-export const readManyPost = createAsyncThunk('post/readMany', async (req, thunkAPI) => {
+export const readManyPost = createAsyncThunk("post/readMany", async (req, thunkAPI) => {
 	try {
 		const res = await PostAPI.readMany();
 		return res;
@@ -30,18 +30,17 @@ export const readManyPost = createAsyncThunk('post/readMany', async (req, thunkA
 	}
 });
 
-export const readOnePost = createAsyncThunk('post/readOne', async (req, thunkAPI) => {
+export const readOnePost = createAsyncThunk("post/readOne", async (req, thunkAPI) => {
 	try {
 		const { params } = req;
 		const res = await PostAPI.readOne(params);
-		console.log(res);
 		return res;
 	} catch (err) {
 		return thunkAPI.rejectWithValue(err.response.data);
 	}
 });
 
-export const updatePost = createAsyncThunk('post/update', async (req, thunkAPI) => {
+export const updatePost = createAsyncThunk("post/update", async (req, thunkAPI) => {
 	try {
 		const { params, body } = req;
 		const res = await PostAPI.update(params, body);
@@ -51,7 +50,7 @@ export const updatePost = createAsyncThunk('post/update', async (req, thunkAPI) 
 	}
 });
 
-export const deletePost = createAsyncThunk('post/delete', async (req, thunkAPI) => {
+export const deletePost = createAsyncThunk("post/delete", async (req, thunkAPI) => {
 	try {
 		const { params } = req;
 		const res = await PostAPI.delete(params);
@@ -61,12 +60,12 @@ export const deletePost = createAsyncThunk('post/delete', async (req, thunkAPI) 
 	}
 });
 
-const pendingAction = (action) => action.type.endsWith('pending') && action.type.includes('post');
-const rejectedAction = (action) => action.type.endsWith('rejected') && action.type.includes('post');
+const pendingAction = (action) => action.type.endsWith("pending") && action.type.includes("post");
+const rejectedAction = (action) => action.type.endsWith("rejected") && action.type.includes("post");
 
 /* ---------------------SLICE--------------------- */
 const postSlice = createSlice({
-	name: 'post',
+	name: "post",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
@@ -74,7 +73,7 @@ const postSlice = createSlice({
 			.addCase(createPost.fulfilled, (state, action) => {
 				state.requesting = false;
 				state.success = true;
-				NotifyHelper.success('Bạn đã tạo bài viết thành cống');
+				NotifyHelper.success("Bạn đã tạo bài viết thành cống");
 			})
 			.addCase(readManyPost.fulfilled, (state, action) => {
 				state.posts = action.payload.results;

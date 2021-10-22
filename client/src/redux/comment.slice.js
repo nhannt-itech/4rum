@@ -25,7 +25,6 @@ export const createComment = createAsyncThunk("comment/create", async (req, thun
 export const readManyComment = createAsyncThunk("comment/readMany", async (req, thunkAPI) => {
 	try {
 		const { params } = req;
-		console.log(params);
 		const res = await CommentAPI.readMany(params);
 		return { pagesize: params.pagesize, ...res };
 	} catch (err) {

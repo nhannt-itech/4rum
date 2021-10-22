@@ -1,8 +1,8 @@
 import DashboardDrawSider from "./draw-sider.component";
 import HeaderIdentityArea from "./header.identity.component";
-import { Layout, Menu, Dropdown, Space, Row, Col } from "antd";
+import { Layout, Menu, Space, Row, Col } from "antd";
 import { Link } from "react-router-dom";
-import { LanguageMenuData, HeaderMenuData } from "../dashboard-layout.data";
+import { HeaderMenuData } from "../dashboard-layout.data";
 
 const { Header } = Layout;
 
@@ -35,14 +35,15 @@ export const DashboardHeader = () => {
 				<Col span={12} lg={8} style={{ textAlign: "right" }}>
 					<Space>
 						{/* Menu for Language */}
-						<Dropdown
+						{/* <Dropdown
+							hidden
 							id="language-menu"
 							trigger={["click"]}
 							overlay={LanguageMenuData}
 							placement="bottomRight"
 						>
 							<img id="language-menu-img" src="/images/icons/vn.png" alt="" />
-						</Dropdown>
+						</Dropdown> */}
 						<HeaderIdentityArea />
 						<DashboardDrawSider id="dashboard-sider" />
 					</Space>

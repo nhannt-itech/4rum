@@ -1,4 +1,4 @@
-import { Drawer, Button, Menu, Row, Col } from "antd";
+import { Drawer, Button, Menu } from "antd";
 import { useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -30,7 +30,7 @@ const DashboardDrawSider = () => {
 						</Menu.Item>
 					))}
 				</Menu>
-				<Row className="optional-dashboard-sider">
+				{/* <hidden Row className="optional-dashboard-sider">
 					<Col span={12}>
 						<img src="/images/icons/vn.png" alt="" />
 						Tiếng Việt
@@ -39,7 +39,7 @@ const DashboardDrawSider = () => {
 						<img src="/images/icons/en.png" alt="" />
 						Tiếng Anh
 					</Col>
-				</Row>
+				</hidden> */}
 			</Drawer>
 		</div>
 	);

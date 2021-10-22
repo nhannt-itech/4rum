@@ -15,7 +15,7 @@ export const SignInPage = (values) => {
 	useEffect(() => {
 		dispatch(setIsSignUp(false));
 		return () => dispatch(setIsSignIn(false));
-	}, []);
+	}, [dispatch]);
 
 	const SignIn = (values) => {
 		dispatch(signIn(values));

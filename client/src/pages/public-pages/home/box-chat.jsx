@@ -1,4 +1,4 @@
-import { Card, Comment, Avatar, Form, List, Input, Tooltip } from "antd";
+import { Card, Comment, Avatar, List, Input, Tooltip } from "antd";
 import moment from "moment";
 import { CommentOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";

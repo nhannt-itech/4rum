@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Card, Avatar } from "antd";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import CommentArea from "./comment-area";
@@ -16,12 +17,6 @@ export const PostDetailPage = () => {
 		const params = { _id: postId };
 		dispatch(readOnePost({ params }));
 	}, []);
-
-	useEffect(() => {
-		if (post) {
-			console.log();
-		}
-	}, [post]);
 
 	const [vote, setVote] = useState(0);
 
