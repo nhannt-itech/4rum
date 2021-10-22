@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { createChat } from "./chat.slice";
 import socketIOClient from "socket.io-client";
 import Cookies from "js-cookies";
-const ENDPOINT = "http://127.0.0.1:8000";
 
 const BoxChat = () => {
 	const auth = Cookies.getItem("auth");
@@ -29,7 +28,7 @@ const BoxChat = () => {
 	};
 
 	useEffect(() => {
-		const socket = socketIOClient(ENDPOINT);
+		const socket = socketIOClient();
 		socket.on("ChatRoom", (data) => {
 			setChats(data);
 		});
