@@ -7,7 +7,6 @@ let auth = (roles = []) => {
 	}
 	return async (req, res, next) => {
 		const token = req.cookies.auth;
-		console.log("hi");
 		try {
 			const user = await User.findByToken(token);
 			if (!user)
@@ -16,7 +15,7 @@ let auth = (roles = []) => {
 					.clearCookie("auth", { path: "/" })
 					.json(error("Bạn phải đăng nhập", res.statusCode));
 			else if (roles.length && !roles.includes(user.role))
-				return res.status(401).json(error("Không có quyền truy cập", res.statusCode));
+				return res.status(402).json(error("Không có quyền truy cập", res.statusCode));
 			else {
 				req.token = token;
 				req.user = user;

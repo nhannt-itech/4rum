@@ -1,15 +1,16 @@
-import { Card, Comment, Avatar, List, Input, Tooltip } from "antd";
+import { Card, Comment, Avatar, List, Input, Tooltip, Popconfirm } from "antd";
 import moment from "moment";
 import { CommentOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import socketIOClient from "socket.io-client";
-import { createChat } from "../../../redux/chat.slice";
+import { createChat, deleteChat } from "../../../redux/chat.slice";
 import Cookies from "js-cookies";
 const isDevelop = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
 const BoxChat = () => {
 	const auth = Cookies.getItem("auth");
+	const role = Cookies.getItem("role");
 	const dispatch = useDispatch();
 	const [chats, setChats] = useState([]);
 	const [chat, setChat] = useState("");
@@ -19,11 +20,18 @@ const BoxChat = () => {
 	};
 
 	const onSubmitChat = (e) => {
-		let content = e.target.value;
-		if (content) {
-			dispatch(createChat({ content }));
+		const body = {
+			content: e.target.value,
+		};
+		if (body.content) {
+			dispatch(createChat({ body }));
 			setChat("");
 		}
+	};
+
+	const onDeleteChat = (_id) => {
+		const params = { _id };
+		dispatch(deleteChat({ params }));
 	};
 
 	useEffect(() => {
@@ -36,10 +44,24 @@ const BoxChat = () => {
 		return () => socket.disconnect();
 	}, []);
 
+	const actions = (_id) => {
+		return [
+			<Popconfirm
+				placement="rightTop"
+				title="Do you want to delete this chat?"
+				onConfirm={() => onDeleteChat(_id)}
+				okText="Yes"
+				cancelText="No"
+			>
+				<span key="delete-chat">delete</span>
+			</Popconfirm>,
+		];
+	};
 	const chatItem = (item) => {
 		return (
 			<li>
 				<Comment
+					actions={role === "Admin" || "Mod" ? actions(item._id) : null}
 					author={item.author.userName}
 					avatar="https://bookingmedtravel.com/img/userimage.png"
 					content={item.content}

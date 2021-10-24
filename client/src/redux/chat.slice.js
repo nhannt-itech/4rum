@@ -10,17 +10,19 @@ const initialState = {
 };
 
 /* ---------------------ACTIONS--------------------- */
-export const createChat = createAsyncThunk("chat/create", async (params, thunkAPI) => {
+export const createChat = createAsyncThunk("chat/create", async (req, thunkAPI) => {
 	try {
-		const res = await ChatAPI.create(params);
+		const { body } = req;
+		const res = await ChatAPI.create(body);
 		return res;
 	} catch (err) {
 		return thunkAPI.rejectWithValue(err.response.data);
 	}
 });
 
-export const deleteChat = createAsyncThunk("chat/delete", async (params, thunkAPI) => {
+export const deleteChat = createAsyncThunk("chat/delete", async (req, thunkAPI) => {
 	try {
+		const { params } = req;
 		const res = await ChatAPI.delete(params);
 		return res;
 	} catch (err) {

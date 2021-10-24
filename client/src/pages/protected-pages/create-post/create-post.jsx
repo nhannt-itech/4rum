@@ -12,7 +12,7 @@ import { setNewPost } from "../../../redux/post.slice";
 export const CreatePostPage = () => {
 	const [editor, setEditor] = useState(BraftEditor.createEditorState(""));
 	const dispatch = useDispatch();
-	const newPost = useSelector((state) => state.post.newPost);
+	const newPost = useSelector((state) => state.post.newObj);
 
 	useEffect(() => {
 		return () => dispatch(setNewPost(null));

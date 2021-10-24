@@ -14,7 +14,7 @@ export const PostPage = () => {
 	const dispatch = useDispatch();
 	const auth = Cookies.getItem("auth");
 
-	const posts = useSelector((state) => state.post.posts);
+	const postArr = useSelector((state) => state.post.arr);
 	const isRequesting = useSelector((state) => state.post.requesting);
 
 	useEffect(() => {
@@ -67,7 +67,7 @@ export const PostPage = () => {
 				{isRequesting ? (
 					<Card loading={{ isRequesting }} style={{ width: "100%" }} />
 				) : (
-					posts.map((item, index) => (
+					postArr.map((item, index) => (
 						<Col key={index} {...responsive.post}>
 							<PostItem post={item}></PostItem>
 						</Col>

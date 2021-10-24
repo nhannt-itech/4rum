@@ -3,12 +3,20 @@ import { NotifyHelper } from "../helpers";
 import { PostAPI } from "../api";
 
 const initialState = {
-	newPost: null,
-	post: null,
-	posts: [],
+	//basic
 	requesting: false,
 	success: false,
 	message: "",
+
+	//post
+	arr: [],
+	isAvailable: true,
+
+	//post-detail
+	currentObj: null,
+
+	//create-post
+	newObj: null,
 	isCreated: false,
 };
 
@@ -71,7 +79,11 @@ const postSlice = createSlice({
 	initialState,
 	reducers: {
 		setNewPost: (state, action) => {
-			state.newPost = action.payload;
+			state.newObj = action.payload;
+		},
+		resetPostStore: (state, action) => {
+			state.newObj = null;
+			state.isAvailable = true;
 		},
 	},
 	extraReducers: (builder) => {
@@ -84,14 +96,18 @@ const postSlice = createSlice({
 				NotifyHelper.success("New post was published!");
 			})
 			.addCase(readManyPost.fulfilled, (state, action) => {
-				state.posts = action.payload.results;
+				state.arr = action.payload.results;
 				state.requesting = false;
 				state.success = true;
 			})
 			.addCase(readOnePost.fulfilled, (state, action) => {
-				state.post = action.payload.results;
+				state.currentObj = action.payload.results;
 				state.requesting = false;
 				state.success = true;
+				state.isAvailable = true;
+			})
+			.addCase(readOnePost.rejected, (state, action) => {
+				state.isAvailable = false;
 			})
 			.addCase(updatePost.fulfilled, (state, action) => {
 				state.requesting = false;
@@ -103,8 +119,8 @@ const postSlice = createSlice({
 			})
 			.addMatcher(pendingAction, (state) => {
 				state.isCreated = false;
-				state.newPost = null;
-				state.post = null;
+				state.newObj = null;
+				state.currentObj = null;
 				state.success = false;
 				state.requesting = true;
 			})
@@ -121,5 +137,5 @@ const postSlice = createSlice({
 	},
 });
 
-export const { setNewPost } = postSlice.actions;
+export const { setNewPost, resetPostStore } = postSlice.actions;
 export default postSlice.reducer;

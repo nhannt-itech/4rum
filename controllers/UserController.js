@@ -21,11 +21,14 @@ module.exports = {
 		try {
 			const userToken = await User.findByToken(req.cookies.auth);
 
-			if (userToken) return res.status(200).json(success(userToken, "OK", res.statusCode));
+			if (userToken)
+				return res
+					.status(200)
+					.cookie("role", userToken.role)
+					.json(success(userToken, "OK", res.statusCode));
 			else {
 				const { userName, password } = req.body;
 				const user = await User.findOne({ userName });
-
 				if (!user) return res.status(400).json(error("Invalid username", res.statusCode));
 				else {
 					const isMatch = await user.comparePassword(password);
@@ -35,6 +38,7 @@ module.exports = {
 						return res
 							.status(200)
 							.cookie("auth", user.token)
+							.cookie("role", user.role)
 							.json(success(doc, "OK", res.statusCode));
 					}
 				}
