@@ -1,16 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { NotifyHelper } from '../../../helpers';
-import { ChatAPI } from '../../../api';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { NotifyHelper } from "../helpers";
+import { ChatAPI } from "../api";
 
 const initialState = {
 	chats: [],
 	requesting: false,
 	success: false,
-	message: '',
+	message: "",
 };
 
 /* ---------------------ACTIONS--------------------- */
-export const createChat = createAsyncThunk('chat/create', async (params, thunkAPI) => {
+export const createChat = createAsyncThunk("chat/create", async (params, thunkAPI) => {
 	try {
 		const res = await ChatAPI.create(params);
 		return res;
@@ -19,7 +19,7 @@ export const createChat = createAsyncThunk('chat/create', async (params, thunkAP
 	}
 });
 
-export const deleteChat = createAsyncThunk('chat/delete', async (params, thunkAPI) => {
+export const deleteChat = createAsyncThunk("chat/delete", async (params, thunkAPI) => {
 	try {
 		const res = await ChatAPI.delete(params);
 		return res;
@@ -28,14 +28,12 @@ export const deleteChat = createAsyncThunk('chat/delete', async (params, thunkAP
 	}
 });
 
-const pendingAction = (action) =>
-	action.type.endsWith('pending') && action.type.includes('chat');
-const rejectedAction = (action) =>
-	action.type.endsWith('rejected') && action.type.includes('chat');
+const pendingAction = (action) => action.type.endsWith("pending") && action.type.includes("chat");
+const rejectedAction = (action) => action.type.endsWith("rejected") && action.type.includes("chat");
 
 /* ---------------------SLICE--------------------- */
 const chatSlice = createSlice({
-	name: 'chat',
+	name: "chat",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {

@@ -1,15 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Card, Button, Col, Form, Input, Select } from "antd";
 import { SendOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { NotifyHelper, extractHTML } from "../../../helpers";
 import { createPost } from "../../../redux/post.slice";
-import { useDispatch } from "react-redux";
-import "braft-editor/dist/index.css";
+import { useDispatch, useSelector } from "react-redux";
 import BraftEditor from "braft-editor";
+import { setNewPost } from "../../../redux/post.slice";
 
 export const CreatePostPage = () => {
 	const [editor, setEditor] = useState(BraftEditor.createEditorState(""));
 	const dispatch = useDispatch();
+	const newPost = useSelector((state) => state.post.newPost);
+
+	useEffect(() => {
+		return () => dispatch(setNewPost(null));
+	}, []);
 
 	const submitPost = (values) => {
 		const content = editor.toHTML();
@@ -24,11 +31,6 @@ export const CreatePostPage = () => {
 		}
 	};
 
-	const children = [];
-	for (let i = 10; i < 36; i++) {
-		children.push(<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>);
-	}
-
 	const responsiveForm = {
 		labelCol: {
 			xs: 24,
@@ -42,6 +44,7 @@ export const CreatePostPage = () => {
 		},
 	};
 
+	if (newPost) return <Redirect to={`/post/${newPost}`} />;
 	return (
 		<div>
 			<Card>

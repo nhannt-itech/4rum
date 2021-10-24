@@ -3,8 +3,8 @@ import moment from "moment";
 import { CommentOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createChat } from "./chat.slice";
 import socketIOClient from "socket.io-client";
+import { createChat } from "../../../redux/chat.slice";
 import Cookies from "js-cookies";
 const isDevelop = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
@@ -83,6 +83,7 @@ const BoxChat = () => {
 					/>
 				)}
 				<List
+					loading={chats.length === 0}
 					className="comment-list"
 					itemLayout="horizontal"
 					dataSource={chats}

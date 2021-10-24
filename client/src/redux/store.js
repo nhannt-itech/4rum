@@ -13,9 +13,9 @@ import {
 	PURGE,
 	REGISTER,
 } from "redux-persist";
-import chatSlice from "../pages/public-pages/home/chat.slice";
 import postSlice from "./post.slice";
 import commentSlice from "./comment.slice";
+import chatSlice from "./chat.slice";
 
 const persistConfig = {
 	key: "root",

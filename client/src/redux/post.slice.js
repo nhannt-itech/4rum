@@ -3,11 +3,13 @@ import { NotifyHelper } from "../helpers";
 import { PostAPI } from "../api";
 
 const initialState = {
+	newPost: null,
 	post: null,
 	posts: [],
 	requesting: false,
 	success: false,
 	message: "",
+	isCreated: false,
 };
 
 /* ---------------------ACTIONS--------------------- */
@@ -67,13 +69,19 @@ const rejectedAction = (action) => action.type.endsWith("rejected") && action.ty
 const postSlice = createSlice({
 	name: "post",
 	initialState,
-	reducers: {},
+	reducers: {
+		setNewPost: (state, action) => {
+			state.newPost = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(createPost.fulfilled, (state, action) => {
 				state.requesting = false;
 				state.success = true;
-				NotifyHelper.success("Bạn đã tạo bài viết thành cống");
+				state.isCreated = true;
+				state.newPost = action.payload.results._id;
+				NotifyHelper.success("New post was published!");
 			})
 			.addCase(readManyPost.fulfilled, (state, action) => {
 				state.posts = action.payload.results;
@@ -94,6 +102,8 @@ const postSlice = createSlice({
 				state.success = true;
 			})
 			.addMatcher(pendingAction, (state) => {
+				state.isCreated = false;
+				state.newPost = null;
 				state.post = null;
 				state.success = false;
 				state.requesting = true;
@@ -111,4 +121,5 @@ const postSlice = createSlice({
 	},
 });
 
+export const { setNewPost } = postSlice.actions;
 export default postSlice.reducer;

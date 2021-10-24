@@ -20,6 +20,7 @@ export const SignInPage = (values) => {
 	const SignIn = (values) => {
 		dispatch(signIn(values));
 	};
+    
 	if (isSignIn || auth) return <Redirect to={state?.from || "/"} />;
 
 	const LogoHeader = () => {

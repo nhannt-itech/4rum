@@ -11,9 +11,15 @@ export const DashboardHeader = () => {
 		<Header id="dashboard-header" style={{ backgroundColor: "white" }}>
 			<Row>
 				<Col span={12} lg={3}>
-					<div style={{ width: "100%", textAlign: "center" }}>
-						<img style={{ width: "90px" }} src={`${process.env.PUBLIC_URL}/Logo.png`} alt="Logo" />
-					</div>
+					<Link to="/">
+						<div style={{ width: "100%", textAlign: "center" }}>
+							<img
+								style={{ width: "90px" }}
+								src={`${process.env.PUBLIC_URL}/Logo.png`}
+								alt="Logo"
+							/>
+						</div>
+					</Link>
 				</Col>
 				{/* Menu for Header */}
 				<Col span={0} lg={13}>

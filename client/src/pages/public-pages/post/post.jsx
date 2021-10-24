@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { readManyPost } from "../../../redux/post.slice";
 import "./post.styles.scss";
-import { Input, Col, Row, Button, Spin } from "antd";
+import { Input, Col, Row, Button, Spin, Card } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import PostItem from "./post-item";
@@ -65,9 +65,7 @@ export const PostPage = () => {
 			)}
 			<Row gutter={[16, 20]}>
 				{isRequesting ? (
-					<div className="posts-loading ">
-						<Spin />
-					</div>
+					<Card loading={{ isRequesting }} style={{ width: "100%" }} />
 				) : (
 					posts.map((item, index) => (
 						<Col key={index} {...responsive.post}>
