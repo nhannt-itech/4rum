@@ -62,7 +62,7 @@ export const PostDetailPage = () => {
 							description={
 								<div style={{ textAlign: "justify" }}>
 									<h2>{currentPost.title}</h2>
-									<td dangerouslySetInnerHTML={{ __html: currentPost.content }} />
+									<div dangerouslySetInnerHTML={{ __html: currentPost.content }} />
 								</div>
 							}
 						/>
