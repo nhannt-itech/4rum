@@ -92,7 +92,7 @@ const postSlice = createSlice({
 				state.requesting = false;
 				state.success = true;
 				state.isCreated = true;
-				state.newPost = action.payload.results._id;
+				state.newObj = action.payload.results._id;
 				NotifyHelper.success("New post was published!");
 			})
 			.addCase(readManyPost.fulfilled, (state, action) => {

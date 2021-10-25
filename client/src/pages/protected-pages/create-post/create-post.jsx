@@ -65,7 +65,7 @@ export const CreatePostPage = () => {
 							className="my-editor"
 							onChange={setEditor}
 							language="vi-vn"
-							placeholder={<div style={{ marginTop: "15px" }}>Bạn đang nghĩ gì...</div>}
+							placeholder="Bạn đang nghĩ gì..."
 						/>
 					</Col>
 					<Col md={{ span: 6, offset: 18 }} xs={24}>
